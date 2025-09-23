@@ -1,0 +1,35 @@
+import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserModule } from './user/user.module';
+import { TodoModule } from './todo/todo.module';
+
+@Module({
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: ['.local.env'],
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        host: configService.get<string>('DATABASE_HOST'),
+        port: Number(configService.get<string>('DATABASE_PORT')), // cast to number
+        username: configService.get<string>('DATABASE_USER'),
+        password: String(configService.get<string>('DATABASE_PASSWORD')), // ensure string
+        database: configService.get<string>('DATABASE_NAME'),
+        synchronize: configService.get<string>('DATABASE_SYNC') === 'true',
+        logging: configService.get<string>('DATABASE_LOGGING') === 'true',
+        entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      }),
+    }),
+    UserModule,
+    TodoModule,
+
+  ],
+  controllers: [],
+  providers: [],
+})
+export class AppModule { }

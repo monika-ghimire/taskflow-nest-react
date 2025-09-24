@@ -4,6 +4,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { TodoModule } from './todo/todo.module';
 
+//find all user
+// add user
+//delete user
+
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -20,8 +25,10 @@ import { TodoModule } from './todo/todo.module';
         username: configService.get<string>('DATABASE_USER'),
         password: String(configService.get<string>('DATABASE_PASSWORD')), // ensure string
         database: configService.get<string>('DATABASE_NAME'),
-        synchronize: configService.get<string>('DATABASE_SYNC') === 'true',
-        logging: configService.get<string>('DATABASE_LOGGING') === 'true',
+       
+         synchronize: process.env.DATABASE_SYNC === 'true',
+  
+        logging: process.env.DATABASE_LOGGING === 'true',
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
       }),
     }),

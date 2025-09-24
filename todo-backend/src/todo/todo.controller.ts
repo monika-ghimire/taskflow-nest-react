@@ -1,34 +1,49 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Patch, Query } from '@nestjs/common';
 import { TodoService } from './todo.service';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
-
 @Controller('todo')
 export class TodoController {
-  constructor(private readonly todoService: TodoService) {}
+  constructor(private readonly todoService: TodoService) { }
 
-  @Post()
-  create(@Body() createTodoDto: CreateTodoDto) {
-    return this.todoService.create(createTodoDto);
+  // Create todo for a user
+  @Post(':userId')
+  create(@Param('userId') userId: string, @Body() createTodoDto: CreateTodoDto) {
+    return this.todoService.create(createTodoDto, +userId);
   }
 
-  @Get()
-  findAll() {
-    return this.todoService.findAll();
+  // Get all incomplete todos for a user
+  @Get(':userId')
+  findAll(@Param('userId') userId: string) {
+    return this.todoService.findnotcompletedtodo(+userId);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.todoService.findOne(+id);
+  // Get completed todos
+  @Get(':userId/completed')
+  findCompleted(@Param('userId') userId: string) {
+    return this.todoService.findCompletedtodo(+userId);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTodoDto: UpdateTodoDto) {
-    return this.todoService.update(+id, updateTodoDto);
+  // Get not completed todos
+  @Get(':userId/not-completed')
+  findNotCompleted(@Param('userId') userId: string) {
+    return this.todoService.findNotCompleted(+userId);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.todoService.remove(+id);
+  @Patch(':todoId')
+  update(@Param('todoId') todoId: string, @Body() updateTodoDto: UpdateTodoDto) {
+    return this.todoService.update(+todoId, updateTodoDto);
+  }
+
+  // Mark todo as completed
+  @Patch(':todoId/complete')
+  markCompleted(@Param('todoId') todoId: string) {
+    return this.todoService.markCompleted(+todoId);
+  }
+
+  // Delete todo
+  @Delete(':todoId')
+  remove(@Param('todoId') todoId: string) {
+    return this.todoService.remove(+todoId);
   }
 }

@@ -1,4 +1,5 @@
-import { Entity , PrimaryGeneratedColumn , Column } from "typeorm";
+import { User } from "src/user/entities/user.entity";
+import { Entity , PrimaryGeneratedColumn , Column, ManyToOne } from "typeorm";
 
 @Entity()
 export class Todo {
@@ -14,5 +15,10 @@ export class Todo {
 
     @Column()
     completed:boolean;
+
+   // many todos can be belong single user
+    @ManyToOne(()=> User , (user)=> user.todos)
+    user :User;
+
     
 }

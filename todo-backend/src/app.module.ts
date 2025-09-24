@@ -8,6 +8,15 @@ import { TodoModule } from './todo/todo.module';
 // add user
 //delete user
 
+// todos  based  on user id
+// add todo
+//find all todos 
+//fina not pending 
+// find competed 
+//delete based on todo id 
+//mark todo  based on todo id 
+
+
 
 @Module({
   imports: [

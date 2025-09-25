@@ -19,12 +19,15 @@ export class UserService {
     user.firstName = createUserDto.firstName;
     user.lastName = createUserDto.lastName;
     user.password = createUserDto.password; 
-    user.role = Constants.ROLES.NORMAL_ROLE;
+    // user.role = Constants.ROLES.NORMAL_ROLE;
+    user.role = createUserDto.role;
+
 
     return this.userRepo.save(user);
   }
 
   // Get all users
+  
   findAll() {
     return this.userRepo.find();
   }
@@ -44,11 +47,19 @@ export class UserService {
   }
 
   // Remove user
-  async remove(id: number) {
-    const user = await this.userRepo.findOne({ where: { id } });
-    if (!user) throw new NotFoundException('User not found');
+ async remove(id: number) {
+  const user = await this.userRepo.findOne({ where: { id } });
+  if (!user) throw new NotFoundException('User not found');
 
-    await this.userRepo.delete(id);
-    return { message: 'User removed successfully' };
-  }
+  user.isActive = false;
+  return this.userRepo.save(user);
+}
+
+findAllActive() {
+  return this.userRepo.find({
+    where: { isActive: true }
+  });
+}
+
+
 }

@@ -16,22 +16,24 @@ export class TodoController {
   }
 
   // Get all incomplete todos for a user
-  @Get(':userId')
+  @Get('/findAllNotCompleted/:userId')
   findAll(@Param('userId') userId: string) {
+    console.log(userId)
     return this.todoService.findnotcompletedtodo(+userId);
   }
 
   // Get completed todos
-  @Get(':userId/completed')
+  @Get('/findAllCompleted/:userId')
   findCompleted(@Param('userId') userId: string) {
     return this.todoService.findCompletedtodo(+userId);
   }
+  
 
-  // Get not completed todos
-  @Get(':userId/not-completed')
-  findNotCompleted(@Param('userId') userId: string) {
-    return this.todoService.findNotCompleted(+userId);
-  }
+  // // Get not completed todos
+  // @Get(':userId/not-completed')
+  // findNotCompleted(@Param('userId') userId: string) {
+  //   return this.todoService.findNotCompleted(+userId);
+  // }
 
   @Patch(':todoId')
   update(@Param('todoId') todoId: string, @Body() updateTodoDto: UpdateTodoDto) {

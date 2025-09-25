@@ -37,4 +37,10 @@ export class UserController {
   async findByEmail(@Param('email') email: string) {
     return this.userService.findUserByEmail(email);
   }
+
+  @Get()
+getAllUsers() {
+  return this.userService.findAllActive();
+}
+
 }

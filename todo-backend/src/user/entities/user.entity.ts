@@ -22,7 +22,11 @@ export class User {
     @Column()
     role:string;
 
+    @Column({ default: true })
+    isActive: boolean;
+
+
     //one user can have multiple todos
-    @OneToMany(()=> Todo , (todo)=> todo.user)
+   @OneToMany(() => Todo, (todo) => todo.user, { cascade: true, onDelete: 'CASCADE' })
     todos : Todo[];
 }

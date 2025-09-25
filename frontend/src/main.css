@@ -1,0 +1,26 @@
+/* Login.css */
+.login-btn {
+    height: 56px;
+    border-radius: 16px;
+    border: 1px solid rgba(47, 47, 47, 0.3);
+}
+
+.shodoweffiect:hover {
+    box-shadow: 0px 0px 5px 3px rgba(47, 47, 47, 0.126);
+}
+
+
+input {
+    border: 1px solid #bcbcbc70 !important;
+    outline: none !important;
+     border-radius: 10px !important;
+     height:59px !important;
+}
+
+
+
+
+input:focus {
+    outline: none !important;
+
+}

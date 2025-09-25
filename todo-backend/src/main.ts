@@ -5,11 +5,11 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalGuards(new JwtAuthGuard());
- app.enableCors({
-  origin: true,    
-  credentials: true, 
-  methods: ['GET', 'POST', 'PATCH', 'DELETE'],
-});
+  app.enableCors({
+    origin: true,
+    credentials: true,
+    methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+  });
 
 
 
@@ -33,6 +33,8 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
-  await app.listen(3000);
+  const PORT = process.env.PORT || 3000;
+  await app.listen(PORT);
+  console.log(`Backend running on port ${PORT}`)
 }
 bootstrap();

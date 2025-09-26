@@ -24,3 +24,10 @@ $ npm run start:dev
 
 React Install Dependencies
 $ npm install
+
+ (updated json in scripts 
+"dev": "vite" to  "dev": "vite  --port 4000")
+
+Run React App (Default Port is 4000)
+npm run dev
+

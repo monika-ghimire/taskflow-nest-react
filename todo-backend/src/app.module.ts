@@ -23,7 +23,7 @@ import { AuthModule } from './auth/auth.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: ['.local.env'],
+      envFilePath: ['.env'],
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
